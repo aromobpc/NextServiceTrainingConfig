@@ -4,7 +4,7 @@
 		"types": {
 			"project": "Installation = 1, Warranty = 2, Billable = 3, PM Annual = 4, PM 6 Monthly = 5, PM Quarterly = 6, PM Monthly = 7, PM Weekly 8",
 			"case": "Installation = 1, Breakfix/Repair = 2, Maintenance/Service = 3, Test Breakfix/Repair = 101",
-			"task": "Site Visit = 1, Admin = 2, Workshop = 3"
+			"task": "Site Visit = 1, Admin = 2, Workshop = 3, Return Visit = 4"
 		},
 		"workflows": {
 			"project": "",
@@ -183,6 +183,12 @@
 	},
 	"billing": {
 		"task": [{
+				"//": "Task Type = Return Visit, Rule 3 - Timebills Non-Billable, Consumables Billable at Base Price, Expenses Billable for all Project and Case Types",
+				"project": true,
+				"case": true,
+				"task": [101],
+				"billing": 3
+			},{
 				"//": "Project Type = Billable, Rule 1 - Consumables Billable, Timebills Billable, Expenses Billable for all Case and Task Types",
 				"project": [2],
 				"case": true,
@@ -318,10 +324,24 @@
 			"employee": {
 				"record": "employee",
 				"filters": [
-					["isinactive","is","F"],"and",
 					[
-						["custentity_nx_mobile_user","is","T"],"or",
-						["formulatext:case when regexp_like({email}, '${ license.administrator }', 'i') then 'T' else 'F' end","is","T"]
+						"isinactive",
+						"is",
+						"F"
+					],
+					"and",
+					[
+						[
+							"custentity_nx_mobile_user",
+							"is",
+							"T"
+						],
+						"or",
+						[
+							"formulatext:case when regexp_like({email}, '${ license.administrator }', 'i') then 'T' else 'F' end",
+							"is",
+							"T"
+						]
 					]
 				],
 				"map": {
@@ -340,9 +360,13 @@
 					"isapprentice": "custentity_nxc_is_apprentice",
 					"teamname": "custentity_nxc_team_name"
 				},
-				"resources": [{
-						"resources": ["inventory"]
-					}]
+				"resources": [
+					{
+						"resources": [
+							"inventory"
+						]
+					}
+				]
 			}
 		},
 		"event": {
@@ -659,6 +683,79 @@
 								"parent": ["smartcompletionblocker","asset","contact","jsa","repairrecord","salesorder","quote","history","times","signinchecklist","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
+							"//": "Task Type = Return Visit, Rule 3 - Timebills Non-Billable, Consumables Billable at Base Price, Expenses Billable for all Project and Case Types",
+							"project": [true],
+							"case": [true],
+							"task": [101],
+							"assettype": 1,
+							"resources": {
+								"array": true,
+								"parent": ["smartcompletionblocker","asset","contact","jsa","servicedassets"],
+								"child": {
+									"record": "customrecord_nx_asset",
+									"filters": [
+										[
+											[
+												["formulatext:'${ event.caseassets }'","isnot","0"],"and",
+												["internalid","anyof","${ event.caseassets }"]
+											],"or",
+											[
+												["formulatext:'${ event.caseassets }'","is","0"],"and",
+												["parent","anyof","${ event.asset }"]
+											]
+										],"and",
+										["internalid","noneof",{
+												"array": true,
+												"default": "0",
+												"assets": {
+													"record": "customrecord_nxc_mr",
+													"filters": [
+														["custrecord_nxc_mr_completed","is","T"],"and",
+														["custrecord_nxc_mr_case","anyof","${ event.supportcase }"],"and",
+														["custrecord_nxc_mr_task","noneof","${ event.internalid }"]
+													],
+													"map": "custrecord_nxc_mr_asset"
+												}
+											}]
+									],
+									"map": [{
+											"id": "formulatext:'asset-'||{internalid}",
+											"label": "formulatext:replace({name}, {parent} || ' : ')",
+											"asset": "internalid",
+											"assettype": "custrecord_nx_asset_type"
+										},{
+											"id": "formulatext:'maintenancerecord-'||{internalid}",
+											"parent": "formulatext:'asset-'||{internalid}",
+											"asset": "internalid",
+											"assettype": "custrecord_nx_asset_type"
+										},{
+											"id": "formulatext:'consumables-'||{internalid}",
+											"parent": "formulatext:'asset-'||{internalid}",
+											"asset": "internalid",
+											"assettype": "custrecord_nx_asset_type"
+										},{
+											"id": "formulatext:'damagereport-'||{internalid}",
+											"parent": "formulatext:'asset-'||{internalid}",
+											"asset": "internalid",
+											"assettype": "custrecord_nx_asset_type"
+										},{
+											"id": "formulatext:'servicehistory-'||{internalid}",
+											"parent": "formulatext:'asset-'||{internalid}",
+											"asset": "internalid"
+										}]
+								},
+								"parent2": ["times","signinchecklist","newdetails","signatures","expenses","files","actions"]
+							}
+						},{
+							"//": "Task Type = Return Visit, Rule 3 - Timebills Non-Billable, Consumables Billable at Base Price, Expenses Billable for all Project and Case Types",
+							"project": [true],
+							"case": [true],
+							"task": [101],
+							"resources": {
+								"array": true,
+								"parent": ["smartcompletionblocker","asset","contact","jsa","maintenancerecord","salesorder","quote","history","times","signinchecklist","newdetails","signatures","expenses","files","actions"]
+							}
+						},{
 							"//": "Catchall",
 							"project": [true,false],
 							"case": [true,false],
@@ -689,11 +786,25 @@
 							"all": true,
 							"record": "item",
 							"filters": [
-								["isinactive","is","F"],"and",
-								["type","anyof",
-									["Group"]
-								],"and",
-								["custitem_nx_show_on_mobile","is","T"]
+								[
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"type",
+									"anyof",
+									[
+										"Group"
+									]
+								],
+								"and",
+								[
+									"custitem_nx_show_on_mobile",
+									"is",
+									"T"
+								]
 							],
 							"map": {
 								"id": "formulatext:'item-'||{internalid}",
@@ -711,18 +822,63 @@
 							"all": true,
 							"record": "item",
 							"filters": [
-								["isinactive","is","F"],"and",
-								["type","anyof",
-									["InvtPart","Assembly"]
-								],"and",
-								["custitem_nx_show_on_mobile","is","T"],"and",
-								["inventorylocation","anyof","${ options.location || user.location }"],"and",
-								["locationquantityavailable","greaterthan",0],"and",
-								["isserialitem","is","F"],"and",
-								["islotitem","is","F"],"and",
 								[
-									["inventorylocation.usesbins","is","F"],"or",
-									["usebins","is","F"]
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"type",
+									"anyof",
+									[
+										"InvtPart",
+										"Assembly"
+									]
+								],
+								"and",
+								[
+									"custitem_nx_show_on_mobile",
+									"is",
+									"T"
+								],
+								"and",
+								[
+									"inventorylocation",
+									"anyof",
+									"${ options.location || user.location }"
+								],
+								"and",
+								[
+									"locationquantityavailable",
+									"greaterthan",
+									0
+								],
+								"and",
+								[
+									"isserialitem",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"islotitem",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									[
+										"inventorylocation.usesbins",
+										"is",
+										"F"
+									],
+									"or",
+									[
+										"usebins",
+										"is",
+										"F"
+									]
 								]
 							],
 							"map": {
@@ -745,27 +901,71 @@
 							"all": true,
 							"record": "item",
 							"filters": [
-								["isinactive","is","F"],"and",
-								["type","anyof",
-									["InvtPart","Assembly"]
-								],"and",
-								["custitem_nx_show_on_mobile","is","T"],"and",
-								["inventorynumber.location","anyof","${ options.location || user.location }"],"and",
-								["inventorynumber.quantityavailable","greaterthan",0],"and",
 								[
-									["usebins","is","F"],"or",
-									["inventorynumber.location","anyof",{
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"type",
+									"anyof",
+									[
+										"InvtPart",
+										"Assembly"
+									]
+								],
+								"and",
+								[
+									"custitem_nx_show_on_mobile",
+									"is",
+									"T"
+								],
+								"and",
+								[
+									"inventorynumber.location",
+									"anyof",
+									"${ options.location || user.location }"
+								],
+								"and",
+								[
+									"inventorynumber.quantityavailable",
+									"greaterthan",
+									0
+								],
+								"and",
+								[
+									[
+										"usebins",
+										"is",
+										"F"
+									],
+									"or",
+									[
+										"inventorynumber.location",
+										"anyof",
+										{
 											"array": true,
 											"default": "0",
 											"locationswithoutbins": {
 												"record": "location",
 												"filters": [
-													["isinactive","is","F"],"and",
-													["usesbins","is","F"]
+													[
+														"isinactive",
+														"is",
+														"F"
+													],
+													"and",
+													[
+														"usesbins",
+														"is",
+														"F"
+													]
 												],
 												"map": "internalid"
 											}
-										}]
+										}
+									]
 								]
 							],
 							"map": {
@@ -796,13 +996,38 @@
 							"all": true,
 							"record": "item",
 							"filters": [
-								["isinactive","is","F"],"and",
-								["type","anyof",
-									["InvtPart","Assembly"]
-								],"and",
-								["custitem_nx_show_on_mobile","is","T"],"and",
-								["inventorynumberbinonhand.location","is","${ options.location || user.location }"],"and",
-								["inventorynumberbinonhand.quantityavailable","greaterthan",0]
+								[
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"type",
+									"anyof",
+									[
+										"InvtPart",
+										"Assembly"
+									]
+								],
+								"and",
+								[
+									"custitem_nx_show_on_mobile",
+									"is",
+									"T"
+								],
+								"and",
+								[
+									"inventorynumberbinonhand.location",
+									"is",
+									"${ options.location || user.location }"
+								],
+								"and",
+								[
+									"inventorynumberbinonhand.quantityavailable",
+									"greaterthan",
+									0
+								]
 							],
 							"map": {
 								"id": "formulatext:'item-'||{internalid}||'-'||{inventorynumberbinonhand.location.id}||'-'||{inventorynumberbinonhand.binnumber}||'-'||{inventorynumberbinonhand.inventorynumber.id}",
@@ -837,15 +1062,50 @@
 							"all": true,
 							"record": "item",
 							"filters": [
-								["isinactive","is","F"],"and",
-								["type","anyof",
-									["InvtPart","Assembly"]
-								],"and",
-								["custitem_nx_show_on_mobile","is","T"],"and",
-								["binonhand.location","is","${ options.location || user.location }"],"and",
-								["binonhand.quantityavailable","greaterthan",0],"and",
-								["isserialitem","is","F"],"and",
-								["islotitem","is","F"]
+								[
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"type",
+									"anyof",
+									[
+										"InvtPart",
+										"Assembly"
+									]
+								],
+								"and",
+								[
+									"custitem_nx_show_on_mobile",
+									"is",
+									"T"
+								],
+								"and",
+								[
+									"binonhand.location",
+									"is",
+									"${ options.location || user.location }"
+								],
+								"and",
+								[
+									"binonhand.quantityavailable",
+									"greaterthan",
+									0
+								],
+								"and",
+								[
+									"isserialitem",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"islotitem",
+									"is",
+									"F"
+								]
 							],
 							"map": {
 								"id": "formulatext:'item-'||{internalid}||'-'||{binonhand.location.id}||'-'||{binonhand.binnumber}||'-'",
@@ -870,11 +1130,31 @@
 						"noninventory": {
 							"record": "item",
 							"filters": [
-								["internalid","noneof","@NONE@"],"and",
-								["custitem_nx_show_on_mobile","is","T"],"and",
-								["isinactive","is","F"],"and",
-								["type","is",
-									["NonInvtPart","OthCharge"]
+								[
+									"internalid",
+									"noneof",
+									"@NONE@"
+								],
+								"and",
+								[
+									"custitem_nx_show_on_mobile",
+									"is",
+									"T"
+								],
+								"and",
+								[
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"type",
+									"is",
+									[
+										"NonInvtPart",
+										"OthCharge"
+									]
 								]
 							],
 							"map": {
@@ -896,11 +1176,25 @@
 						"all": true,
 						"record": "item",
 						"filters": [
-							["isinactive","is","F"],"and",
-							["type","anyof",
-								["Kit"]
-							],"and",
-							["custitem_nx_show_on_mobile","is","T"]
+							[
+								"isinactive",
+								"is",
+								"F"
+							],
+							"and",
+							[
+								"type",
+								"anyof",
+								[
+									"Kit"
+								]
+							],
+							"and",
+							[
+								"custitem_nx_show_on_mobile",
+								"is",
+								"T"
+							]
 						],
 						"map": {
 							"id": "*formulatext:'item-'||{internalid}",
@@ -908,7 +1202,8 @@
 								"id": "internalid",
 								"label": "formulatext:nvl({displayname}, {name})|| ' (' || {itemid} || ')'"
 							},
-							"components": [{
+							"components": [
+								{
 									"id": "formulatext:'item-'||{memberitem.internalid}",
 									"item": {
 										"id": "memberitem",
@@ -916,7 +1211,8 @@
 									},
 									"quantity": "memberquantity",
 									"type": "memberitem.type"
-								}]
+								}
+							]
 						}
 					}
 				},
@@ -934,10 +1230,24 @@
 						"location": {
 							"record": "item",
 							"filters": [
-								["isinactive","is","F"],"and",
 								[
-									["type","is","Discount"],"or",
-									["custitem_nx_show_on_mobile","is","T"]
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									[
+										"type",
+										"is",
+										"Discount"
+									],
+									"or",
+									[
+										"custitem_nx_show_on_mobile",
+										"is",
+										"T"
+									]
 								]
 							],
 							"map": {
@@ -957,13 +1267,38 @@
 						"transferpricecostingfalse": {
 							"record": "transferorder",
 							"filters": [
-								["transferlocation","is","${ options.location || user.location }"],"and",
-								["status","anyof",
-									["TrnfrOrd:F","TrnfrOrd:E"]
-								],"and",
-								["formulanumeric:nvl({transferorderquantityshipped},0)","greaterthan","0"],"and",
-								["mainline","is","F"],"and",
-								["istransferpricecosting","is","F"]
+								[
+									"transferlocation",
+									"is",
+									"${ options.location || user.location }"
+								],
+								"and",
+								[
+									"status",
+									"anyof",
+									[
+										"TrnfrOrd:F",
+										"TrnfrOrd:E"
+									]
+								],
+								"and",
+								[
+									"formulanumeric:nvl({transferorderquantityshipped},0)",
+									"greaterthan",
+									"0"
+								],
+								"and",
+								[
+									"mainline",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"istransferpricecosting",
+									"is",
+									"F"
+								]
 							],
 							"map": {
 								"id": "internalid",
@@ -979,29 +1314,79 @@
 						"transferpricecostingtrue": {
 							"record": "itemfulfillment",
 							"filters": [
-								["createdfrom.transferlocation","is","${ options.location || user.location }"],"and",
-								["createdfrom.status","anyof",
-									["TrnfrOrd:F","TrnfrOrd:E"]
-								],"and",
-								["formulatext:case when {account} is null and lower({item.type.id}) not in ('taxitem', 'taxgroup', 'shipitem') then 'T' else 'F' end","is","T"],"and",
-								["createdfrom.istransferpricecosting","is","T"],"and",
-								["createdfrom.recordtype","is","transferorder"],"and",
-								["internalid","noneof",{
+								[
+									"createdfrom.transferlocation",
+									"is",
+									"${ options.location || user.location }"
+								],
+								"and",
+								[
+									"createdfrom.status",
+									"anyof",
+									[
+										"TrnfrOrd:F",
+										"TrnfrOrd:E"
+									]
+								],
+								"and",
+								[
+									"formulatext:case when {account} is null and lower({item.type.id}) not in ('taxitem', 'taxgroup', 'shipitem') then 'T' else 'F' end",
+									"is",
+									"T"
+								],
+								"and",
+								[
+									"createdfrom.istransferpricecosting",
+									"is",
+									"T"
+								],
+								"and",
+								[
+									"createdfrom.recordtype",
+									"is",
+									"transferorder"
+								],
+								"and",
+								[
+									"internalid",
+									"noneof",
+									{
 										"array": true,
 										"default": "@NONE@",
 										"received": {
 											"record": "itemreceipt",
 											"filters": [
-												["createdfrom.transferlocation","is","${ options.location || user.location }"],"and",
-												["createdfrom.status","anyof",
-													["TrnfrOrd:F","TrnfrOrd:E"]
-												],"and",
-												["createdfrom.recordtype","is","transferorder"],"and",
-												["appliedtotransaction.recordtype","is","itemfulfillment"]
+												[
+													"createdfrom.transferlocation",
+													"is",
+													"${ options.location || user.location }"
+												],
+												"and",
+												[
+													"createdfrom.status",
+													"anyof",
+													[
+														"TrnfrOrd:F",
+														"TrnfrOrd:E"
+													]
+												],
+												"and",
+												[
+													"createdfrom.recordtype",
+													"is",
+													"transferorder"
+												],
+												"and",
+												[
+													"appliedtotransaction.recordtype",
+													"is",
+													"itemfulfillment"
+												]
 											],
 											"map": "appliedtotransaction"
 										}
-									}]
+									}
+								]
 							],
 							"map": {
 								"id": "formulatext:{createdfrom.id}||'-'||{internalid}",
@@ -1362,11 +1747,30 @@
 				"extend": "models/transaction",
 				"record": "estimate",
 				"filters": [
-					["recordtype","is","estimate"],"and",
 					[
-						["custbody_nx_task","is","${ event.internalid }"],"or",
-						["custbody_nx_projecttask","is","${ event.internalid }"],"or",
-						["formulatext:case when ({job.internalid} = '${ event.job }') and {custbody_nx_case.internalid} = '${ event.supportcase }' then 'T' else 'F' end","is","T"]
+						"recordtype",
+						"is",
+						"estimate"
+					],
+					"and",
+					[
+						[
+							"custbody_nx_task",
+							"is",
+							"${ event.internalid }"
+						],
+						"or",
+						[
+							"custbody_nx_projecttask",
+							"is",
+							"${ event.internalid }"
+						],
+						"or",
+						[
+							"formulatext:case when ({job.internalid} = '${ event.job }') and {custbody_nx_case.internalid} = '${ event.supportcase }' then 'T' else 'F' end",
+							"is",
+							"T"
+						]
 					]
 				],
 				"map": {
@@ -1380,7 +1784,8 @@
 					"signature": "custbody_nx_customer_signature",
 					"sendemail": "tobeemailed",
 					"emailto": "email",
-					"items": [{
+					"items": [
+						{
 							"line": "line|item.line",
 							"description": "memo|item.description",
 							"item": {
@@ -1393,7 +1798,8 @@
 							"taskcol": "custcol_nx_task|item.custcol_nx_task",
 							"projecttaskcol": "custcol_nx_projecttask|item.custcol_nx_projecttask",
 							"assetcol": "custcol_nx_asset|item.custcol_nx_asset"
-						}]
+						}
+					]
 				},
 				"defaults": {
 					"customer": "${ event.customer }",
@@ -1518,8 +1924,8 @@
 					"label": "Employee",
 					"readonly": true,
 					"value": {
-						"id": "${user.internalid}",
-						"label": "${user.label}"
+					  "id": "${user.internalid}",
+					  "label": "${user.label}"
 					}
 				},
 				"custrecord_nxc_ar_date": {
@@ -2327,9 +2733,23 @@
 			"employee": {
 				"record": "employee",
 				"filters": [
-					["isinactive","is","F"],"and",
-					["custentity_nx_region","noneof","@NONE@"],"and",
-					["formulatext:case when '${ user.view }' = '0' or {subsidiary.id} in (${ user.view }) then 'T' else 'F' end","is","T"]
+					[
+						"isinactive",
+						"is",
+						"F"
+					],
+					"and",
+					[
+						"custentity_nx_region",
+						"noneof",
+						"@NONE@"
+					],
+					"and",
+					[
+						"formulatext:case when '${ user.view }' = '0' or {subsidiary.id} in (${ user.view }) then 'T' else 'F' end",
+						"is",
+						"T"
+					]
 				],
 				"map": {
 					"id": "internalid",
@@ -2403,9 +2823,23 @@
 						"employee": {
 							"record": "employee",
 							"filters": [
-								["isinactive","is","F"],"and",
-								["custentity_nx_region","noneof","@NONE@"],"and",
-								["formulatext:case when '${ user.view }' = '0' or {subsidiary.id} in (${ user.view }) then 'T' else 'F' end","is","T"]
+								[
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"custentity_nx_region",
+									"noneof",
+									"@NONE@"
+								],
+								"and",
+								[
+									"formulatext:case when '${ user.view }' = '0' or {subsidiary.id} in (${ user.view }) then 'T' else 'F' end",
+									"is",
+									"T"
+								]
 							],
 							"map": {
 								"id": "internalid",
@@ -2471,65 +2905,74 @@
 					"label": "Priority",
 					"column": "priority",
 					"palette": "rainbow",
-					"items": [{
+					"items": [
+						{
 							"id": "1",
 							"label": "High",
 							"cluster": "1"
-						},{
+						},
+						{
 							"id": "2",
 							"label": "Medium",
 							"cluster": "2"
-						},{
+						},
+						{
 							"id": "3",
 							"label": "Low",
 							"cluster": "3"
-						}],
+						}
+					],
 					"eventswatch": true
 				},
 				"casepriority": {
-					"label": "Case Priority",
-					"column": "casepriority",
-					"palette": "rainbow",
-					"items": [{
-							"id": "1",
-							"label": "High",
-							"cluster": "1"
-						},{
-							"id": "2",
-							"label": "Medium",
-							"cluster": "2"
-						},{
-							"id": "3",
-							"label": "Low",
-							"cluster": "3"
-						}],
-					"eventswatch": true
-				},
+          "label": "Case Priority",
+          "column": "casepriority",
+          "palette": "rainbow",
+          "items": [{
+            "id": "1",
+            "label": "High",
+            "cluster": "1"
+          },{
+            "id": "2",
+            "label": "Medium",
+            "cluster": "2"
+          },{
+            "id": "3",
+            "label": "Low",
+            "cluster": "3"
+          }],
+          "eventswatch": true
+        },
 				"status": {
 					"label": "Status",
 					"column": "status",
 					"palette": "cool",
-					"items": [{
+					"items": [
+						{
 							"id": "notstarted",
 							"label": "Not Started",
 							"swatch": "cornflowerblue",
 							"cluster": "4"
-						},{
+						},
+						{
 							"id": "travelling",
 							"label": "Travelling",
 							"swatch": "cyanprocess",
 							"cluster": "3"
-						},{
+						},
+						{
 							"id": "inprogress",
 							"label": "In Progress",
 							"swatch": "inchworm",
 							"cluster": "2"
-						},{
+						},
+						{
 							"id": "overdue",
 							"label": "Overdue",
 							"swatch": "electricpurple",
 							"cluster": "1"
-						}],
+						}
+					],
 					"eventswatch": true
 				},
 				"type": {
@@ -2562,19 +3005,55 @@
 			"palette": {
 				"rainbow": {
 					"label": "Rainbow",
-					"swatches": ["redpigment","sizzlingsunrise","skybluecrayola","darkorange","bitterlime","shockingpink","electricviolet","battleshipgrey"]
+					"swatches": [
+						"redpigment",
+						"sizzlingsunrise",
+						"skybluecrayola",
+						"darkorange",
+						"bitterlime",
+						"shockingpink",
+						"electricviolet",
+						"battleshipgrey"
+					]
 				},
 				"cool": {
 					"label": "Cool",
-					"swatches": ["cornflowerblue","viridiangreen","cyanprocess","mediumaquamarine","inchworm","electricpurple","electricindigo","battleshipgrey"]
+					"swatches": [
+						"cornflowerblue",
+						"viridiangreen",
+						"cyanprocess",
+						"mediumaquamarine",
+						"inchworm",
+						"electricpurple",
+						"electricindigo",
+						"battleshipgrey"
+					]
 				},
 				"warm": {
 					"label": "Warm",
-					"swatches": ["redpigment","sizzlingsunrise","laserlemon","darkorange","bitterlime","shockingpink","electricviolet","battleshipgrey"]
+					"swatches": [
+						"redpigment",
+						"sizzlingsunrise",
+						"laserlemon",
+						"darkorange",
+						"bitterlime",
+						"shockingpink",
+						"electricviolet",
+						"battleshipgrey"
+					]
 				},
 				"contrast": {
 					"label": "Contrast",
-					"swatches": ["ultramarine","celadongreen","metallicseaweed","navyblue","greenryb","bluevioletcolorwheel","trypanblue","onyx"]
+					"swatches": [
+						"ultramarine",
+						"celadongreen",
+						"metallicseaweed",
+						"navyblue",
+						"greenryb",
+						"bluevioletcolorwheel",
+						"trypanblue",
+						"onyx"
+					]
 				}
 			}
 		}
