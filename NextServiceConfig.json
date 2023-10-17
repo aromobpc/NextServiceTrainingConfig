@@ -179,6 +179,9 @@
 		}
 	},
 	"views/task/servicereport": {
+		"hidden": false
+	},
+	"views/case/servicereport": {
 		"hidden": true
 	},
 	"billing": {
