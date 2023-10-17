@@ -2,7 +2,7 @@
 	"dependencies": {
 		"config_structure": "netsute, mobile, scheduler, notifications",
 		"types": {
-			"project": "Installation = 1, Warranty = 2, Billable = 3, PM Annual = 4, PM 6 Monthly = 5, PM Quarterly = 6, PM Monthly = 7, PM Weekly 8",
+			"project": "Installation = 1, Warranty = 2, Billable = 3, PM Annual = 4, PM 6 Monthly = 5, PM Quarterly = 6, PM Monthly = 7, PM Weekly = 8, Bi-Annual PM = 101, Free Labor Project = 102, Maintenance Agreement = 103, Installation = 104, Fortnightly PM = 105",
 			"case": "Installation = 1, Breakfix/Repair = 2, Maintenance/Service = 3, Test Breakfix/Repair = 101",
 			"task": "Site Visit = 1, Admin = 2, Workshop = 3, Return Visit = 4"
 		},
@@ -299,10 +299,22 @@
 				"interval": 24,
 				"unit": "month",
 				"create": true
+			},{
+				"//": "Fortnightly PM",
+				"project": [105],
+				"case": {
+					"type": 3,
+					"custevent_nx_case_asset": "${project.custentity_nx_asset}",
+					"custevent_nxc_case_assets": "${project.projectassets}",
+					"custevent_nx_case_details": "comments"
+				},
+				"interval": 14,
+				"unit": "day",
+				"create": true
 			}],
 		"caserules": [{
 				"//": "1 Case 1 Task",
-				"project": [3,4,5,6,7,101],
+				"project": [3,4,5,6,7,101,105],
 				"case": [3],
 				"offset": 0,
 				"task": {
