@@ -1423,7 +1423,7 @@
 			"label": "${ event.assettype == '1' ? 'Site Details' : 'Asset Details' }",
 			"readonly": true,
 			"form": {
-				"customform": "${ options.asset ? 263 : ( event.assettype == '1' ? 264 : 263) }",
+				"customform": "${ event.assettype == '103' ? 269 : 263 }",
 				"exclude": ["name","custrecord_nx_asset_transaction","custrecord_nx_asset_address","custrecord_nx_asset_time_zone"]
 			},
 			"icon": "checked",
