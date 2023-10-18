@@ -1841,6 +1841,41 @@
 			"disable": "completed",
 			"element": {
 				"item": {
+					"type": "select",
+					"label": "Item",
+					"class": "el-6",
+					"search": true,
+					"required": true,
+					"column": 1,
+					"options": {
+						"sort": "label",
+						"serviceitems": {
+							"record": "item",
+							"filters": [
+								[
+									"isinactive",
+									"is",
+									"F"
+								],
+								"and",
+								[
+									"type",
+									"anyof",
+									"Service"
+								],
+								"and",
+								[
+									"custitem_nx_show_on_mobile",
+									"is",
+									"T"
+								]
+							],
+							"map": {
+								"id": "internalid",
+								"label": "name"
+							}
+						}
+					},
 					"index": 10
 				},
 				"date": {
@@ -2399,6 +2434,7 @@
 		"repairrecord": {
 			"//": "NXC base Repair for demonstration and building upon",
 			"enable": ["commenced","jsa"],
+			"disable": "completed",
 			"icon": "clipboard",
 			"label": "Repair Record",
 			"max": 1,
