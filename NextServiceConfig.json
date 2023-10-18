@@ -400,10 +400,11 @@
 						["startdate","onorbefore","fiveDaysFromNow"]
 					],
 					"map": {
-						"label": "formulatext:nvl2({case.custevent_nx_case_type}, {case.custevent_nx_case_type}||' ', '')||coalesce({custevent_nx_customer.companyname},trim({custevent_nx_customer.firstname}||' '||{custevent_nx_customer.lastname}),{custevent_nx_task_type})",
-						"body": "formulatext:nvl2({case.casenumber}, '<p>Case Number: '||{case.casenumber}||'</p><p>Case Type: '||{case.custevent_nx_case_type}||'</p>', '')||nvl2({case.custevent_nx_case_details}, '<p>Case Details: '||case when length(regexp_replace(trim({case.custevent_nx_case_details}),'['||CHR(13)||']','<br>')) > 1900 then substr(regexp_replace(trim({case.custevent_nx_case_details}),'['||CHR(13)||']','<br>'),0,1900)||' ...' else regexp_replace(trim({case.custevent_nx_case_details}),'['||CHR(13)||']','<br>') end|| '</p>', '')|| nvl2({custevent_nx_task_number}, '<p>Task Number: '||{custevent_nx_task_number}||'</p><p>Task Type: '||{custevent_nx_task_type}||'</p>', '')||nvl2({message}, '<p>Task Details: '||case when length(regexp_replace(trim({message}),'['||CHR(13)||']','<br>')) > 1900 then substr(regexp_replace(trim({message}),'['||CHR(13)||']','<br>'),0,1900)||' ...' else regexp_replace(trim({message}),'['||CHR(13)||']','<br>') end|| '</p>', '')",
+						"label": "formulatext:{custevent_nx_task_type} || ' (' || {custevent_nx_task_number} || ')' || nvl2({custevent_nx_task_asset}, ' at ' || {custevent_nx_task_asset}, '')",
 						"caseassets": "formulatext[]:nvl({case.custevent_nxc_case_assets.id},0)",
-						"sublabel": "formulatext:{custevent_nx_task_type}||' ('||{custevent_nx_task_number}||') - '||NVL2({custevent_nx_task_asset.name},{custevent_nx_task_asset.name}||' ', '')||NVL2({custevent_nx_task_team}, NVL2({assigned.internalid}, ' | LEAD: '||{assigned.entityid}, '') || '  |  TEAM: '||replace({custevent_nx_task_team},',',', '), '')"
+						"sublabel": "formulatext:'LEAD: '||{assigned.entityid} || ', TEAM: '||replace({custevent_nx_task_team},',',', ')",
+						"//sublabel": "formulatext:{custevent_nx_task_type}||' ('||{custevent_nx_task_number}||') - '||NVL2({custevent_nx_task_asset.name},{custevent_nx_task_asset.name}||' ', '')||NVL2({custevent_nx_task_team}, NVL2({assigned.internalid}, ' | LEAD: '||{assigned.entityid}, '') || '  |  TEAM: '||replace({custevent_nx_task_team},',',', '), '')"
+
 					},
 					"resources": [{
 							"//": "Installation Project, Installation/Commissioning Case, Task Type = Site Visit, Asset Type = Site, Children = Case Assets - child asset search filters hide assets where commissioning is completed",
