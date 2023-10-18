@@ -2192,7 +2192,7 @@
 					"type": "signature",
 					"label": "Customer Signature",
 					"hidden": "!customername.value",
-					"required": true
+					"required": false
 				},
 				"techname": {
 					"required": true,
