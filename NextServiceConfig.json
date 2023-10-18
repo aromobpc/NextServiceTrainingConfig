@@ -402,7 +402,7 @@
 					"map": {
 						"label": "formulatext:{custevent_nx_task_type} || ' (' || {custevent_nx_task_number} || ')' || nvl2({custevent_nx_task_asset}, ' at ' || {custevent_nx_task_asset}, '')",
 						"caseassets": "formulatext[]:nvl({case.custevent_nxc_case_assets.id},0)",
-						"sublabel": "formulatext:'LEAD: '||{assigned.entityid} || ', TEAM: '||replace({custevent_nx_task_team},',',', ')",
+						"sublabel": "formulatext:NVL2({assigned.internalid}, 'LEAD: '||{assigned.entityid}, '') || NVL2({custevent_nx_task_team}, ', TEAM: '||replace({custevent_nx_task_team},',',', '), '')",
 						"//sublabel": "formulatext:{custevent_nx_task_type}||' ('||{custevent_nx_task_number}||') - '||NVL2({custevent_nx_task_asset.name},{custevent_nx_task_asset.name}||' ', '')||NVL2({custevent_nx_task_team}, NVL2({assigned.internalid}, ' | LEAD: '||{assigned.entityid}, '') || '  |  TEAM: '||replace({custevent_nx_task_team},',',', '), '')"
 
 					},
