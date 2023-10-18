@@ -2125,6 +2125,29 @@
 					"type": "text",
 					"label": "Customer Name"
 				},
+				"contactdetails": {
+					"required": false,
+					"type": "text",
+					"label": "Contact Details"
+				},
+				"prefcontactmethod": {
+					"type": "select",
+					"label": "Preferred Contact Method",
+					"options": {
+						"record": "customlist_nxc_pref_contact_method",
+						"filters": [
+							[
+								"isinactive",
+								"is",
+								"F"
+							]
+						],
+						"map": {
+							"id": "internalid",
+							"label": "name"
+						}
+					}
+				},
 				"notonsite": {
 					"required": false,
 					"type": "checkbox",
@@ -2164,6 +2187,11 @@
 					"tech_signature": "custevent_nxc_technician_signature",
 					"cust_signature": "custevent_nxc_customer_signature",
 					"customername": "custevent_nxc_customer_name",
+					"contactdetails": "custevent_nxc_ar_contact_details",
+					"prefcontactmethod": {
+            "id": "=custevent_nxc_ar_pref_contact_method",
+            "label": "#custevent_nxc_ar_pref_contact_method|"
+          },
 					"notonsite": "custevent_nxc_cust_not_onsite",
 					"techname": "custevent_nxc_technician_name"
 				}
