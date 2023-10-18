@@ -402,9 +402,7 @@
 					"map": {
 						"label": "formulatext:{custevent_nx_task_type} || ' (' || {custevent_nx_task_number} || ')' || nvl2({custevent_nx_task_asset}, ' at ' || {custevent_nx_task_asset}, '')",
 						"caseassets": "formulatext[]:nvl({case.custevent_nxc_case_assets.id},0)",
-						"sublabel": "formulatext:NVL2({assigned.internalid}, 'LEAD: '||{assigned.entityid}, '') || NVL2({custevent_nx_task_team}, ', TEAM: '||replace({custevent_nx_task_team},',',', '), '')",
-						"//sublabel": "formulatext:{custevent_nx_task_type}||' ('||{custevent_nx_task_number}||') - '||NVL2({custevent_nx_task_asset.name},{custevent_nx_task_asset.name}||' ', '')||NVL2({custevent_nx_task_team}, NVL2({assigned.internalid}, ' | LEAD: '||{assigned.entityid}, '') || '  |  TEAM: '||replace({custevent_nx_task_team},',',', '), '')"
-
+						"sublabel": "formulatext:(case when {custevent_nx_task_booking_confirmed} = 'T' then '*booked* ' else '' end) ||NVL2({assigned.internalid}, 'Lead: '||{assigned.entityid}, '') || NVL2({custevent_nx_task_team}, ', Team: '||replace({custevent_nx_task_team},',',', '), '')"
 					},
 					"resources": [{
 							"//": "Installation Project, Installation/Commissioning Case, Task Type = Site Visit, Asset Type = Site, Children = Case Assets - child asset search filters hide assets where commissioning is completed",
