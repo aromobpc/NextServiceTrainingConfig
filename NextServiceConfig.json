@@ -3012,7 +3012,8 @@
 					"link": false,
 					"casepriority": "=case.priority",
 					"casetype": "case.custevent_nx_case_type|",
-					"label": "formulatext: {case.custevent_nx_case_type}||' '||{custevent_nx_address}"
+					"label": "formulatext: rtrim( ltrim( {case.custevent_nx_case_type} || ' - ' || {custevent_nx_task_asset.custrecord_nx_asset_address_text}, ' - '), ' - ')",
+					"secondarylabel": "formulatext:nvl({job.custentity_nx_project_type}, 'Project') || ' for ' || {custevent_nx_customer.companyname}"
 				}
 			}
 		},
