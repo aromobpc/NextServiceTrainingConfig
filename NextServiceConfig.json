@@ -2817,7 +2817,7 @@
 		"//": "6am - 7pm",
 		"start": 6,
 		"end": 17,
-		"groups": ["regiontext"],
+		"groups": ["division"],
 		"assignedpanel": {
 			"filter": {
 				"casetype": {
@@ -2877,7 +2877,7 @@
 					"longitude": "custentity_nx_longitude",
 					"calendar": "formulatext:nvl2({custentity_nx_work_calendar}, 'nxworkcalendar-'||{custentity_nx_work_calendar.id}, '')",
 					"class": "formulatext:''",
-					"division": "custentity_nxc_division",
+					"division": "#custentity_nxc_division",
 					"initials": "formulatext:substr({firstname}, 1, 1)||substr({lastname}, 1, 1)",
 					"label": "formulatext:nvl(trim(trim(trim({firstname})||' '||{middlename})||' '||{lastname}), {entityid})",
 					"title": "formulatext:'<a href=\"${ url.employee }?id='||{internalid}||'\" target=\"_blank\">'||nvl(trim(trim(trim({firstname})||' '||{middlename})||' '||{lastname}), {entityid})||'</a>'",
@@ -2890,6 +2890,7 @@
 					"skilltext": "formulatext:nvl2({custentity_nx_skill}, replace({custentity_nx_skill}, ',', '<br>'), '')",
 					"region": "custentity_nx_region",
 					"regiontext": "custentity_nx_region#",
+					"teamleadertext": "#custentity_nxc_ar_team_leader",
 					"image": "formulatext:nvl2({image}, '${ server }file/'||{image.id}, '')",
 					"phone": "mobilephone",
 					"mobile": "formulatext:case when ({custentity_nx_mobile_user} = 'T' or regexp_like({email}, '${ license.administrator }', 'i')) and ({internalid} = ${ user.internalid } or '${ user.mobile }' = 'true') then '${ url.mobile }&user='||{email} end",
