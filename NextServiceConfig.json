@@ -1214,14 +1214,16 @@
 							"id": "*formulatext:'item-'||{internalid}",
 							"item": {
 								"id": "internalid",
-								"label": "formulatext:nvl({displayname}, {name})|| ' (' || {itemid} || ')'"
+								"label": "formulatext:nvl({displayname}, {name})|| ' (' || {itemid} || ')'",
+								"optgroup": "#type"
 							},
 							"components": [
 								{
 									"id": "formulatext:'item-'||{memberitem.internalid}",
 									"item": {
 										"id": "memberitem",
-										"label": "formulatext:nvl({memberitem.displayname}, {memberitem.name})"
+										"label": "formulatext:nvl({memberitem.displayname}, {memberitem.name})",
+										"optgroup": "#type"
 									},
 									"quantity": "memberquantity",
 									"type": "memberitem.type"
@@ -1267,6 +1269,7 @@
 							"map": {
 								"id": "internalid",
 								"label": "formulatext:nvl({displayname}, {name})",
+								"optgroup": "#type",
 								"description": "salesdescription",
 								"min": "formulatext:nvl({minimumquantity}, 1)"
 							}
@@ -1319,7 +1322,8 @@
 								"label": "formulatext:'Transfer Order #'||{tranid}",
 								"item": {
 									"id": "item",
-									"label": "#item"
+									"label": "#item",
+									"optgroup": "#type"
 								},
 								"quantity": "transferorderquantityshipped",
 								"transferorder": "internalid"
@@ -1407,7 +1411,8 @@
 								"label": "formulatext:'Transfer Order #'||{createdfrom.tranid}||' - Item Fulfillment #'||{tranid}",
 								"item": {
 									"id": "item",
-									"label": "#item"
+									"label": "#item",
+									"optgroup": "#type"
 								},
 								"quantity": "quantity",
 								"transferorder": "createdfrom",
@@ -1805,7 +1810,8 @@
 							"description": "memo|item.description",
 							"item": {
 								"id": "=item|item.item",
-								"label": "#item|"
+								"label": "#item|",
+								"optgroup": "#type"
 							},
 							"quantity": "formulatext:nvl({quantity},1)|item.quantity",
 							"amount": "amount|",
