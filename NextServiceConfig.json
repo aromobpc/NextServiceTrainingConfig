@@ -1630,6 +1630,9 @@
 			"icon": "shoppingcart",
 			"hidden": "${user.isapprentice}",
 			"article": {
+				"extend": "models/transaction",
+      	"record": "salesorder",
+				"filters": ["custbody_nx_case","anyof","${event.supportcase}"],
 				"defaults": {
 					"customform": 368
 				}
@@ -1933,12 +1936,43 @@
 				}
 			},
 			"article": {
+				"record": "timebill",
+				"filters": [
+					[
+						"custcol_nxc_case",
+						"anyof",
+						"${event.supportcase}"
+					],
+					"and",
+					[
+						"employee",
+						"anyof",
+						"${ user.internalid }"
+					]
+				],
+				"filterby": {
+					"asset": "${ options.asset || event.asset }"
+				},
 				"map": {
+					"duration": "durationdecimal|hours",
+					"item": {
+						"id": "=item.internalid|item",
+						"label": "item.name|"
+					},
+					"date": "date|trandate",
+					"asset": "custcol_nx_asset",
 					"memo": "memo",
-					"//startcheck": "custcol_nxc_start_check",
-					"//endcheck": "custcol_nxc_end_check",
 					"start_time": "custcol_nxc_start_time",
 					"end_time": "custcol_nxc_end_time"
+				},
+				"idempotencyField": "custcol_nx_idempotency_key",
+				"defaults": {
+					"casetaskevent": "${ event.internalid }",
+					"custcol_nx_task": "${ event.crmtask }",
+					"custcol_nx_projecttask": "${ event.projecttask }",
+					"asset": "${ options.asset || event.asset }",
+					"customer": "${ event.company }",
+					"employee": "${ user.internalid }"
 				}
 			}
 		},
