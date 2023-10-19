@@ -822,7 +822,7 @@
 							],
 							"map": {
 								"id": "formulatext:'item-'||{internalid}",
-								"label": "formulatext:nvl({displayname}, {name}) || ' (' || {itemid} || ')'",
+								"label": "formulatext:nvl({displayname}, {name})|| ' (' || {itemid} || ')'",
 								"barcode": "formulatext:nvl({upccode}, {itemid})",
 								"item": {
 									"id": "internalid",
@@ -1268,7 +1268,7 @@
 							],
 							"map": {
 								"id": "internalid",
-								"label": "formulatext:nvl({displayname}, {name})",
+								"label": "formulatext:nvl({displayname}, {name})|| ' (' || {itemid} || ')'",
 								"optgroup": "#type",
 								"description": "salesdescription",
 								"min": "formulatext:nvl({minimumquantity}, 1)"
