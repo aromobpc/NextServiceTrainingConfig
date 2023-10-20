@@ -55,7 +55,7 @@
 		"prototype": {
 			"map": {
 				"//": "Naming Convention = SITE NAME/ADDRESS : ASSET TYPE : SERIAL",
-				"autoname": "formulatext: CASE WHEN {custrecord_nx_asset_type.id} = 1 THEN NVL({custrecord_nxc_na_site_name}, NVL2({custrecord_nx_asset_customer}, {custrecord_nx_asset_customer} || ' - ' || {custrecord_nx_asset_address_text}, {custrecord_nx_asset_address_text})) ELSE NVL2({custrecord_nx_asset_type}, {custrecord_nx_asset_type}||' : '||{custrecord_nx_asset_serial},{custrecord_nx_asset_serial}) END",
+				"autoname": "formulatext: CASE WHEN {custrecord_nx_asset_type.id} = 1 THEN NVL({custrecord_nxc_na_site_name}, NVL2({custrecord_nx_asset_customer}, {custrecord_nx_asset_customer.companyname} || ' - ' || {custrecord_nx_asset_address_text}, {custrecord_nx_asset_address_text})) ELSE NVL2({custrecord_nx_asset_type}, {custrecord_nx_asset_type}||' '||{custrecord_nx_asset_serial},{custrecord_nx_asset_serial}) END",
 				"customers": "formulatext[]:nvl({custrecord_nx_asset_customer.id}, 0)||','||nvl({custrecord_nxc_na_3pc.id}, 0)"
 			}
 		}
