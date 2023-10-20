@@ -328,7 +328,10 @@
 				"case": [3],
 				"offset": 0,
 				"task": {
-					"type": 1
+					"type": 1,
+					"custevent_nx_start_time": "${project.custentity_nxc_task_start_time}",
+        	"custevent_nx_end_time": "${project.custentity_nxc_task_end_time}",
+					"assigned": "${project.custentity_nxc_task_assignee}"
 				}
 			}]
 	},
