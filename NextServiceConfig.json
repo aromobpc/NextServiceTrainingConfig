@@ -237,7 +237,8 @@
 					"type": 3,
 					"custevent_nx_case_asset": "${project.custentity_nx_asset}",
 					"custevent_nxc_case_assets": "${project.projectassets}",
-					"custevent_nx_case_details": "comments"
+					"custevent_nx_case_details": "comments",
+					"custevent_nx_case_purchaseorder": "${project.custentity_nxc_po_number}"
 				},
 				"interval": 12,
 				"unit": "month",
@@ -249,7 +250,8 @@
 					"type": 3,
 					"custevent_nx_case_asset": "${project.custentity_nx_asset}",
 					"custevent_nxc_case_assets": "${project.projectassets}",
-					"custevent_nx_case_details": "comments"
+					"custevent_nx_case_details": "comments",
+					"custevent_nx_case_purchaseorder": "${project.custentity_nxc_po_number}"
 				},
 				"interval": 6,
 				"unit": "month",
@@ -261,7 +263,8 @@
 					"type": 3,
 					"custevent_nx_case_asset": "${project.custentity_nx_asset}",
 					"custevent_nxc_case_assets": "${project.projectassets}",
-					"custevent_nx_case_details": "comments"
+					"custevent_nx_case_details": "comments",
+					"custevent_nx_case_purchaseorder": "${project.custentity_nxc_po_number}"
 				},
 				"interval": 3,
 				"unit": "month",
@@ -273,7 +276,8 @@
 					"type": 3,
 					"custevent_nx_case_asset": "${project.custentity_nx_asset}",
 					"custevent_nxc_case_assets": "${project.projectassets}",
-					"custevent_nx_case_details": "comments"
+					"custevent_nx_case_details": "comments",
+					"custevent_nx_case_purchaseorder": "${project.custentity_nxc_po_number}"
 				},
 				"interval": 1,
 				"unit": "month",
@@ -285,7 +289,8 @@
 					"type": 3,
 					"custevent_nx_case_asset": "${project.custentity_nx_asset}",
 					"custevent_nxc_case_assets": "${project.projectassets}",
-					"custevent_nx_case_details": "comments"
+					"custevent_nx_case_details": "comments",
+					"custevent_nx_case_purchaseorder": "${project.custentity_nxc_po_number}"
 				},
 				"interval": 7,
 				"unit": "day",
@@ -297,7 +302,8 @@
 					"type": 3,
 					"custevent_nx_case_asset": "${project.custentity_nx_asset}",
 					"custevent_nxc_case_assets": "${project.projectassets}",
-					"custevent_nx_case_details": "comments"
+					"custevent_nx_case_details": "comments",
+					"custevent_nx_case_purchaseorder": "${project.custentity_nxc_po_number}"
 				},
 				"interval": 24,
 				"unit": "month",
@@ -309,7 +315,8 @@
 					"type": 3,
 					"custevent_nx_case_asset": "${project.custentity_nx_asset}",
 					"custevent_nxc_case_assets": "${project.projectassets}",
-					"custevent_nx_case_details": "comments"
+					"custevent_nx_case_details": "comments",
+					"custevent_nx_case_purchaseorder": "${project.custentity_nxc_po_number}"
 				},
 				"interval": 14,
 				"unit": "day",
