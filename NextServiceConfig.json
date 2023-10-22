@@ -544,6 +544,11 @@
 											"asset": "internalid",
 											"assettype": "custrecord_nx_asset_type"
 										},{
+											"id": "formulatext:'visualinspection-'||{internalid}",
+											"parent": "formulatext:'asset-'||{internalid}",
+											"asset": "internalid",
+											"assettype": "custrecord_nx_asset_type"
+										},{
 											"id": "formulatext:'servicehistory-'||{internalid}",
 											"parent": "formulatext:'asset-'||{internalid}",
 											"asset": "internalid"
@@ -613,6 +618,11 @@
 											"assettype": "custrecord_nx_asset_type"
 										},{
 											"id": "formulatext:'damagereport-'||{internalid}",
+											"parent": "formulatext:'asset-'||{internalid}",
+											"asset": "internalid",
+											"assettype": "custrecord_nx_asset_type"
+										},{
+											"id": "formulatext:'visualinspection-'||{internalid}",
 											"parent": "formulatext:'asset-'||{internalid}",
 											"asset": "internalid",
 											"assettype": "custrecord_nx_asset_type"
@@ -2101,7 +2111,7 @@
 			"//": "New damage report checklist - NXPEDS2022T - Create a Checklist (machine/child level)",
 			"enable": "commenced",
 			"icon": "clipboard",
-			"label": "Damage Report Checklist",
+			"label": "Damage Report",
 			"max": 1,
 			"form": {
 				"customform": 268,
@@ -2111,9 +2121,31 @@
 				"record": "customrecord_nxc_damage_report",
 				"filters": ["custrecord_nxc_dr_task","anyof","${ event.internalid }"],
 				"defaults": {
-					"custrecord_nxc_dr_task": "${ event.internalid }",
+					"custrecord_nxc_dr_project": "${event.company}",
 					"custrecord_nxc_dr_case": "${ event.supportcase }",
+					"custrecord_nxc_dr_task": "${ event.internalid }",
 					"custrecord_nxc_dr_asset": "${ options.asset || event.asset }"
+				}
+			}
+		},
+		"visualinspection": {
+			"//": "New Visual Inspection checklist - NXPEDS2022T - Create a Checklist (machine/child level)",
+			"enable": "commenced",
+			"icon": "wrench",
+			"label": "Visual Inspection",
+			"min": 1,
+			"form": {
+				"customform": 271,
+				"exclude": ["custrecord_nxc_vi_task","custrecord_nxc_vi_case","custrecord_nxc_vi_project","custrecord_nxc_vi_asset"]
+			},
+			"article": {
+				"record": "customrecord_nxc_visual_inspection",
+				"filters": ["custrecord_nxc_vi_task","anyof","${ event.internalid }"],
+				"defaults": {
+					"custrecord_nxc_vi_project": "${event.company}",
+					"custrecord_nxc_vi_case": "${ event.supportcase }",
+					"custrecord_nxc_vi_task": "${ event.internalid }",
+					"custrecord_nxc_vi_asset": "${ options.asset || event.asset }"
 				}
 			}
 		},
