@@ -422,7 +422,7 @@
 							"assettype": 1,
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","commissionedassets","signinchecklist","quote"],
+								"parent": ["smartcompletionblocker","asset","contact","jsa","commissionedassets","signinchecklist","signoutchecklist","quote"],
 								"child": {
 									"record": "customrecord_nx_asset",
 									"filters": [
@@ -476,7 +476,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["smartcompletionblocker","times","signinchecklist","quote","newdetails","signatures","expenses","files","actions"]
+								"parent2": ["smartcompletionblocker","times","signinchecklist","signoutchecklist","quote","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
 							"//": "Installation Project, Installation/Commissioning Case, Task Type = Site Visit, Asset Type = Machine",
@@ -485,7 +485,7 @@
 							"task": [1],
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","commissioningrecord","history","times","signinchecklist","newdetails","signatures","expenses","files","actions"]
+								"parent": ["smartcompletionblocker","asset","contact","jsa","commissioningrecord","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
 							"//": "Install, Warranty, Billable & PM, Maintenance Case, Task Type = Site Visit, Workshop, Asset Type = Site child asset search filters hide assets where maintenance is completed",
@@ -549,7 +549,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["times","signinchecklist","newdetails","signatures","expenses","files"]
+								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files"]
 							}
 						},{
 							"//": "Install, Warranty, Billable & PM, Maintenance Case, Task Type = Site Visit, Workshop, Asset Type = Machine",
@@ -558,7 +558,7 @@
 							"task": [1,3],
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","maintenancerecord","salesorder","quote","history","times","signinchecklist","newdetails","signatures","expenses","files"]
+								"parent": ["smartcompletionblocker","asset","contact","jsa","maintenancerecord","salesorder","quote","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files"]
 							}
 						},{
 							"//": "Warranty, Billable & PM, Repair Case, Task Type = Site Visit, Workshop, Asset Type = Site search child asset search filters hide asset where repair is completed",
@@ -568,7 +568,7 @@
 							"assettype": 1,
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","consumables","repairedassets","signinchecklist"],
+								"parent": ["smartcompletionblocker","asset","contact","jsa","consumables","repairedassets","signinchecklist","signoutchecklist"],
 								"child": {
 									"record": "customrecord_nx_asset",
 									"filters": [
@@ -622,7 +622,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["times","signinchecklist","newdetails","signatures","expenses","files","actions"]
+								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
 							"//": "Install, Warranty, Billable & PM, Repair Case, Task Type = Site Visit, Asset Type = Machine",
@@ -631,7 +631,7 @@
 							"task": [1,3],
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","repairrecord","salesorder","quote","history","times","signinchecklist","newdetails","signatures","expenses","files","actions"]
+								"parent": ["smartcompletionblocker","asset","contact","jsa","repairrecord","salesorder","quote","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
 							"//": "Warranty, Billable & PM, Test Repair Case, Task Type = Site Visit, Workshop, Asset Type = Site search child asset search filters hide asset where repair is completed",
@@ -641,7 +641,7 @@
 							"assettype": 1,
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","consumables","repairedassets","signinchecklist"],
+								"parent": ["smartcompletionblocker","asset","contact","jsa","consumables","repairedassets","signinchecklist","signoutchecklist"],
 								"child": {
 									"record": "customrecord_nx_asset",
 									"filters": [
@@ -695,7 +695,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["times","signinchecklist","newdetails","signatures","expenses","files","actions"]
+								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
 							"//": "Install, Warranty, Billable & PM, Test Repair Case, Task Type = Site Visit, Asset Type = Machine",
@@ -704,7 +704,7 @@
 							"task": [1,3],
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","repairrecord","salesorder","quote","history","times","signinchecklist","newdetails","signatures","expenses","files","actions"]
+								"parent": ["smartcompletionblocker","asset","contact","jsa","repairrecord","salesorder","quote","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
 							"//": "Task Type = Return Visit, Rule 3 - Timebills Non-Billable, Consumables Billable at Base Price, Expenses Billable for all Project and Case Types",
@@ -768,7 +768,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["times","signinchecklist","newdetails","signatures","expenses","files"]
+								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files"]
 							}
 						},{
 							"//": "Task Type = Return Visit, Rule 3 - Timebills Non-Billable, Consumables Billable at Base Price, Expenses Billable for all Project and Case Types",
@@ -777,7 +777,7 @@
 							"task": [101],
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","maintenancerecord","salesorder","quote","history","times","signinchecklist","newdetails","signatures","expenses","files"]
+								"parent": ["smartcompletionblocker","asset","contact","jsa","maintenancerecord","salesorder","quote","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files"]
 							}
 						},{
 							"//": "Catchall",
@@ -1855,7 +1855,7 @@
 		},
 		"times": {
 			"label": "Timesheet",
-			"enable": "commenced",
+			"enable": ["commenced","signinchecklist"],
 			"disable": "completed",
 			"element": {
 				"item": {
@@ -2012,7 +2012,7 @@
 		},
 		"signinchecklist": {
 			"//": "New sign-in checklist - NXPEDS2022T - Create a Checklist (site/parent level)",
-			"enable": ["commenced","times"],
+			"enable": "commenced",
 			"icon": "clipboard",
 			"label": "Sign-In Checklist",
 			"min": 1,
@@ -2048,6 +2048,52 @@
 					"custrecord_nxc_ar_task": "${ event.internalid }",
 					"custrecord_nxc_ar_case": "${ event.supportcase }",
 					"custrecord_nxc_ar_asset": "${ options.asset || event.asset }"
+				}
+			}
+		},
+		"signoutchecklist": {
+			"//": "New sign-out checklist - NXPEDS2022T - Create a Checklist (site/parent level)",
+			"enable": "times",
+			"icon": "clipboard",
+			"label": "Sign-Out Checklist",
+			"min": 1,
+			"max": 1,
+			"element": {
+				"custrecord_nxc_sign_out_employee": {
+					"required": true,
+					"type": "select",
+					"label": "Employee",
+					"readonly": true,
+					"value": {
+					  "id": "${user.internalid}",
+					  "label": "${user.label}"
+					}
+				},
+				"custrecord_nxc_sign_out_date": {
+					"required": true,
+					"type": "date",
+					"label": "Date",
+					"readonly": true,
+					"value": "${event.date}"
+				},
+				"custrecord_nxc_sign_out_signature": {
+					"required": true,
+					"type": "signature",
+					"label": "Signature"
+				}
+			},
+			"form": {
+				"customform": 270,
+				"exclude": ["custrecord_nxc_sign_out_task","custrecord_nxc_sign_out_case","custrecord_nxc_sign_out_project","custrecord_nxc_sign_out_asset"]
+			},
+			"article": {
+				"record": "customrecord_nxc_sign_out",
+				"filters": ["custrecord_nxc_sign_out_case","anyof","${ event.supportcase }"],
+				"defaults": {
+					"custrecord_nxc_sign_out_project": "${ event.job }",
+					"custrecord_nxc_sign_out_task": "${ event.internalid }",
+					"custrecord_nxc_sign_out_case": "${ event.supportcase }",
+					"custrecord_nxc_sign_out_asset": "${ options.asset || event.asset }"
 				}
 			}
 		},
