@@ -383,7 +383,8 @@
 					"subsidiary": "subsidiary|",
 					"createevent": "${ server.addable }",
 					"isapprentice": "custentity_nxc_is_apprentice",
-					"teamname": "custentity_nxc_team_name"
+					"teamname": "custentity_nxc_team_name",
+					"department": "department"
 				},
 				"resources": [
 					{
@@ -1892,6 +1893,7 @@
 			"label": "Timesheet",
 			"enable": ["commenced","signinchecklist"],
 			"disable": "completed",
+			"hidden": "${ user.department == '9' ? true : false }",
 			"element": {
 				"item": {
 					"type": "select",
