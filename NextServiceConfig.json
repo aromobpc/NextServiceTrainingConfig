@@ -422,7 +422,7 @@
 							"assettype": 1,
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","commissionedassets","signinchecklist","signoutchecklist","quote"],
+								"parent": ["smartcompletionblocker","asset","contact","jsa","commissionedassets","signinchecklist","signoutchecklist","quote","salesorder"],
 								"child": {
 									"record": "customrecord_nx_asset",
 									"filters": [
@@ -476,7 +476,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["smartcompletionblocker","times","signinchecklist","signoutchecklist","quote","newdetails","signatures","expenses","files","actions"]
+								"parent2": ["smartcompletionblocker","times","signinchecklist","signoutchecklist","quote","salesorder","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
 							"//": "Installation Project, Installation/Commissioning Case, Task Type = Site Visit, Asset Type = Machine",
@@ -485,7 +485,7 @@
 							"task": [1],
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","commissioningrecord","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
+								"parent": ["smartcompletionblocker","asset","contact","jsa","salesorder","commissioningrecord","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
 							}
 						},{
 							"//": "Install, Warranty, Billable & PM, Maintenance Case, Task Type = Site Visit, Workshop, Asset Type = Site child asset search filters hide assets where maintenance is completed",
@@ -495,7 +495,7 @@
 							"assettype": 1,
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","servicedassets"],
+								"parent": ["smartcompletionblocker","asset","contact","jsa","salesorder","servicedassets"],
 								"child": {
 									"record": "customrecord_nx_asset",
 									"filters": [
@@ -554,7 +554,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files"]
+								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","salesorder"]
 							}
 						},{
 							"//": "Install, Warranty, Billable & PM, Maintenance Case, Task Type = Site Visit, Workshop, Asset Type = Machine",
@@ -563,7 +563,7 @@
 							"task": [1,3],
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","maintenancerecord","salesorder","quote","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files"]
+								"parent": ["smartcompletionblocker","asset","contact","jsa","maintenancerecord","salesorder","quote","salesorder","history","times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files"]
 							}
 						},{
 							"//": "Warranty, Billable & PM, Repair Case, Task Type = Site Visit, Workshop, Asset Type = Site search child asset search filters hide asset where repair is completed",
@@ -573,7 +573,7 @@
 							"assettype": 1,
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","consumables","repairedassets","signinchecklist","signoutchecklist"],
+								"parent": ["smartcompletionblocker","asset","contact","jsa","salesorder","consumables","repairedassets","signinchecklist","signoutchecklist"],
 								"child": {
 									"record": "customrecord_nx_asset",
 									"filters": [
@@ -632,7 +632,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
+								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions","salesorder"]
 							}
 						},{
 							"//": "Install, Warranty, Billable & PM, Repair Case, Task Type = Site Visit, Asset Type = Machine",
@@ -651,7 +651,7 @@
 							"assettype": 1,
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","consumables","repairedassets","signinchecklist","signoutchecklist"],
+								"parent": ["smartcompletionblocker","asset","contact","jsa","salesorder","consumables","repairedassets","signinchecklist","signoutchecklist"],
 								"child": {
 									"record": "customrecord_nx_asset",
 									"filters": [
@@ -705,7 +705,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions"]
+								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","actions","salesorder"]
 							}
 						},{
 							"//": "Install, Warranty, Billable & PM, Test Repair Case, Task Type = Site Visit, Asset Type = Machine",
@@ -724,7 +724,7 @@
 							"assettype": 1,
 							"resources": {
 								"array": true,
-								"parent": ["smartcompletionblocker","asset","contact","jsa","servicedassets"],
+								"parent": ["smartcompletionblocker","asset","contact","jsa","salesorder","servicedassets"],
 								"child": {
 									"record": "customrecord_nx_asset",
 									"filters": [
@@ -778,7 +778,7 @@
 											"asset": "internalid"
 										}]
 								},
-								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files"]
+								"parent2": ["times","signinchecklist","signoutchecklist","newdetails","signatures","expenses","files","salesorder"]
 							}
 						},{
 							"//": "Task Type = Return Visit, Rule 3 - Timebills Non-Billable, Consumables Billable at Base Price, Expenses Billable for all Project and Case Types",
@@ -1658,8 +1658,33 @@
 				}
 			},
 			"element": {
-				"quantity": {
-					"precision": 2
+				"items": {
+					"type": "table",
+					"label": "Items",
+					"required": true,
+					"value": {
+						"record": "job",
+						"filters": [
+							[
+								"internalid",
+								"anyof",
+								"${event.company}"
+							],
+							"and",
+							[
+								"custentity_nxc_maintenance_fee",
+								"noneof",
+								"@NONE@"
+							]
+						],
+						"map": {
+							"item": {
+								"id": "=custentity_nxc_maintenance_fee",
+								"label": "#custentity_nxc_maintenance_fee"
+							},
+							"quantity": "custentity_nxc_maintenance_fee_qty"
+						}
+					}
 				},
 				"quantityavailable": {
 					"type": "text",
