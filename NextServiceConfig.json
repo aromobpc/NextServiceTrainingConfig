@@ -1686,6 +1686,21 @@
 						}
 					}
 				},
+				"amount": {
+					"type": "currency",
+					"label": "Amount",
+					"class": "col-right",
+					"hidden": true,
+					"parent": "items",
+					"column": 6
+				},
+				"total": {
+					"type": "currency",
+					"label": "Total",
+					"class": "el-12",
+					"readonly": true,
+					"column": 4
+				},
 				"quantityavailable": {
 					"type": "text",
 					"label": "Quantity Available",
