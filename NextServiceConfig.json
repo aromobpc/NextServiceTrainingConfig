@@ -2063,7 +2063,7 @@
 		},
 		"signoutchecklist": {
 			"//": "New sign-out checklist - NXPEDS2022T - Create a Checklist (site/parent level)",
-			"enable": "times",
+			"enable": ["commenced","times"],
 			"icon": "clipboard",
 			"label": "Sign-Out Checklist",
 			"min": 1,
