@@ -1188,7 +1188,8 @@
 									"is",
 									[
 										"NonInvtPart",
-										"OthCharge"
+										"OthCharge",
+										"Service"
 									]
 								]
 							],
