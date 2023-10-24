@@ -2350,11 +2350,8 @@
 					"required": false
 				},
 				"techname": {
-					"required": true,
 					"type": "text",
-					"label": "Technician Name",
-					"readonly": true,
-					"value": "tech_signature.value ? '${ user.label }' : ''"
+					"label": "Technician Name"
 				},
 				"teamname": {
 					"required": false,
@@ -2366,7 +2363,7 @@
 				"tech_signature": {
 					"type": "signature",
 					"label": "Technician Signature",
-					"required": true
+					"hidden": "!techname.value"
 				}
 			},
 			"article": {
