@@ -3153,6 +3153,7 @@
 				"map": {
 					"link": false,
 					"casepriority": "=case.priority",
+					"projecttype": "=job.custentity_nx_project_type",
 					"casetype": "case.custevent_nx_case_type|",
 					"casedivision": "case.custevent_nxc_case_division|",
 					"label": "formulatext: rtrim( ltrim( {case.custevent_nx_case_type} || ' - ' || {custevent_nx_task_asset.custrecord_nx_asset_address_text}, ' - '), ' - ')",
@@ -3259,6 +3260,19 @@
 					"palette": "contrast",
 					"items": {
 						"record": "customrecord_nx_case_type",
+						"map": {
+							"id": "internalid",
+							"label": "name"
+						}
+					},
+					"eventswatch": true
+				},
+				"projecttype": {
+					"label": "Project Type",
+					"column": "projecttype",
+					"palette": "cool",
+					"items": {
+						"record": "customrecord_nx_project_type",
 						"map": {
 							"id": "internalid",
 							"label": "name"
