@@ -2943,6 +2943,18 @@
 							"label": "name"
 						}
 					}
+				},
+				"casedivision": {
+					"label": "Case Division",
+					"column": "casedivision",
+					"options": {
+						"record": "customlist_nxc_division",
+						"filters": ["isinactive","is","F"],
+						"map": {
+							"id": "internalid",
+							"label": "name"
+						}
+					}
 				}
 			}
 		},
@@ -2953,6 +2965,18 @@
 					"column": "casetype",
 					"options": {
 						"record": "customrecord_nx_case_type",
+						"map": {
+							"id": "internalid",
+							"label": "name"
+						}
+					}
+				},
+				"casedivision": {
+					"label": "Case Division",
+					"column": "casedivision",
+					"options": {
+						"record": "customlist_nxc_division",
+						"filters": ["isinactive","is","F"],
 						"map": {
 							"id": "internalid",
 							"label": "name"
@@ -3042,6 +3066,7 @@
 					"column": "division",
 					"options": {
 						"record": "customlist_nxc_division",
+						"filters": ["isinactive","is","F"],
 						"map": {
 							"id": "internalid",
 							"label": "name"
@@ -3126,6 +3151,7 @@
 					"link": false,
 					"casepriority": "=case.priority",
 					"casetype": "case.custevent_nx_case_type|",
+					"casedivision": "case.custevent_nxc_case_division|",
 					"label": "formulatext: rtrim( ltrim( {case.custevent_nx_case_type} || ' - ' || {custevent_nx_task_asset.custrecord_nx_asset_address_text}, ' - '), ' - ')",
 					"secondarylabel": "formulatext:nvl({job.custentity_nx_project_type}, 'Project') || ' for ' || {custevent_nx_customer.companyname}",
 					"details": "formulatext:\t\t\t\t\t\t\t\t\t'<p><a href=\"${ url.task }?id='||{internalid}||'\" title=\"Task '||{custevent_nx_task_number}||'\" target=\"_blank\">'||nvl({custevent_nx_task_type}, 'Task')||' '||{custevent_nx_task_number}||'</a></p>'||\t\t\t\t\t\t\t\t\t'<p>'||{priority}||' Priority</p>'||\t\t\t\t\t\t\t\t\tnvl2({custevent_nx_task_asset}, '<p><a href=\"${ url.asset }&id='||{custevent_nx_task_asset.internalid}||'\" title=\"Asset '||{custevent_nx_task_asset.custrecord_nx_asset_serial}||'\" target=\"_blank\">'||nvl({custevent_nx_task_asset.custrecord_nx_asset_item}, {custevent_nx_task_asset})||'</a></p>', '')||\t\t\t\t\t\t\t\t\tnvl2({case.internalid}, '<p><a href=\"${ url.case }?id='||{case.internalid}||'\" title=\"Case '||{case.casenumber}||'\" target=\"_blank\">'||nvl({case.custevent_nx_case_type}, 'Case')||' '||{case.casenumber}||'</a></p>', '')||nvl2({case.custevent_nx_case_transaction},'<p><a target=\"_blank\" href=\"/app/accounting/transactions/transaction.nl?id='||{case.custevent_nx_case_transaction.id}||'\">'||{case.custevent_nx_case_transaction}||'</a></p>','')||\t\t\t\t\t\t\t\t\tnvl2({job.internalid}, '<p><a href=\"${ url.project }?id='||{job.internalid}||'\" title=\"Project '||{job.entityid}||'\" target=\"_blank\">'||nvl({job.custentity_nx_project_type}, 'Project')||' '||{job.entityid}||'</a></p>', '')||\t\t\t\t\t\t\t\t\tnvl2({case.custevent_nx_case_details}, '<p class=\"ellipsis\"><b>Details:</b><br>'||substr({case.custevent_nx_case_details},1,200)||'</p>', '')||\t\t\t\t\t\t\t\t\tnvl2({message}, '<p class=\"ellipsis\"><b>Message:</b><br>'||substr({message},1,200)||'</p>', '')||\t\t\t\t\t\t\t\t\tnvl2({job.comments}, '<p class=\"ellipsis\"><b>Project Details:</b><br>'||substr({job.comments},1,200)||'</p>', '')||\t\t\t\t\t\t\t\t\tnvl2({custevent_nx_task_skill}, '<p><b>Skills:</b><br>'||replace({custevent_nx_task_skill}, ',', ', '), '')||\t\t\t\t\t\t\t\t\tnvl2({custevent_nx_actions_taken}, '<p class=\"ellipsis\"><b>Actions Taken:</b><br>'||substr({custevent_nx_actions_taken},1,200)||'</p>', '')"
