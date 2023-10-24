@@ -217,7 +217,7 @@
 		},
 		"expense": {
 			"category": {
-				"map": "formulatext:case when ${ task.billing } in (2,4,6,8) then 'F' else 'T' end"
+				"map": "formulatext:case when {custrecord_nxc_non_bill_expense} = 'T' then 'F' when ${ task.billing } in (2,4,6,8) then 'F' else 'T' end"
 			}
 		},
 		"consumable": {
